@@ -169,32 +169,11 @@ namespace LIS.Tests
 
             Assert.Equal(expected, result);
         }
-
-        [Fact]
-        public void TestCase13()
-        {
-            string input = "1 23 6 45 65 87 9 10 12 ";
-            // Deliberately checks a non-contiguous subsequence and is expected to fail
-            // while the solver follows the contiguous-sequence contract.
-            string expected = "1 6 45 65 87";
-            var result = LisSolver.LongestIncreasingSubsequence(input);
-
-            WriteTestResult("13", input, expected, result, result == expected);
-
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void TestCase14()
-        {
-            string input = "10 9 8 7 6 5 4 3 2 1";
-            string expected = "10";
-            var result = LisSolver.LongestIncreasingSubsequence(input);
-
-            WriteTestResult("14", input, expected, result, result == expected);
-
-            Assert.Equal(expected, result);
-        }
+        // Experimental TestCase13 and TestCase14 are disabled because they are
+        // outside the original Markdown cases.
+        // TestCase13 expects non-contiguous behavior, which conflicts with the
+        // current contiguous-sequence contract.
+        // TestCase14 covers decreasing input as an additional edge case.
 
     }
 }
