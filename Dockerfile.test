@@ -1,13 +1,14 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0
 
 WORKDIR /src
-# Copy project files
+# Restore dependencies before copying source files so Docker can reuse this layer.
 COPY LIS.Cli/LIS.Cli.csproj LIS.Cli/
 COPY LIS.Tests/LIS.Tests.csproj LIS.Tests/
 RUN dotnet restore LIS.Tests/LIS.Tests.csproj
 
+# Copy the application and test sources after dependency restoration.
 COPY LIS.Cli/ LIS.Cli/
 COPY LIS.Tests/ LIS.Tests/
 
-WORKDIR /src
+# Run the test suite when the test container starts.
 ENTRYPOINT ["dotnet", "test", "LIS.Tests/LIS.Tests.csproj", "--configuration", "Release"]

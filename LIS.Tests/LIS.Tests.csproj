@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!-- Builds the xUnit test project for the LIS implementation. -->
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -11,6 +12,7 @@
     </CollectCoverageFrom>
   </PropertyGroup>
   <ItemGroup>
+    <!-- Test framework, test runner, and code coverage dependencies. -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.2.1" />
     <PackageReference Include="xunit" Version="2.6.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.6.2" />
@@ -21,6 +23,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <!-- Allows tests to call the production solver directly. -->
     <ProjectReference Include="..\LIS.Cli\LIS.Cli.csproj" />
   </ItemGroup>
 </Project>

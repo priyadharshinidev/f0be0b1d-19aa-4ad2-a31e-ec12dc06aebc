@@ -8,6 +8,7 @@ on:
 
 jobs:
   build-and-test:
+    # Run the build and verification steps on a clean Linux runner.
     runs-on: ubuntu-latest
     
     strategy:
@@ -15,25 +16,32 @@ jobs:
         dotnet-version: ['8.0.x']
 
     steps:
+    # Check out the source code for the workflow run.
     - uses: actions/checkout@v4
     
+    # Install the .NET SDK version used by the projects.
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ matrix.dotnet-version }}
     
+    # Restore NuGet packages before compiling the test project.
     - name: Restore dependencies
       run: dotnet restore LIS.Tests/LIS.Tests.csproj
     
+    # Compile the application and test projects in Release mode.
     - name: Build
       run: dotnet build LIS.Tests/LIS.Tests.csproj --configuration Release --no-restore
     
+    # Run tests, create a TRX report, and collect code coverage.
     - name: Run tests
       run: dotnet test LIS.Tests/LIS.Tests.csproj --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage" --results-directory TestResults
 
+    # Fail the workflow when tracked code does not match repository formatting rules.
     - name: Verify formatting
       run: dotnet format LIS.Tests/LIS.Tests.csproj --no-restore --verify-no-changes
     
+    # Preserve test results even when an earlier verification step fails.
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4
@@ -41,6 +49,7 @@ jobs:
         name: test-results
         path: '**/test-results.trx'
 
+    # Preserve the generated coverage report as a workflow artifact.
     - name: Upload coverage report
       if: always()
       uses: actions/upload-artifact@v4
