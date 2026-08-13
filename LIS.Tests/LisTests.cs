@@ -66,6 +66,8 @@ namespace LIS.Tests
         [Fact]
         public void TestCase3_LargeDataset()
         {
+            string input = "2311 11333 14555 1947 30594 9799 9663 11887 16326 1916 855 1089 7108 24443 11050 9291 608 12201 9576 3788 26729 31009 4477 16209 3535 9303 31974 30771 11024 18715";
+
             // Validate the result properties instead of hard-coding a long
             // expected sequence for this large dataset.
             var result = LisSolver.LongestIncreasingSubsequence(input);
