@@ -36,5 +36,5 @@ CMD [""]
 
 # Labels
 LABEL maintainer="LIS Implementation"
-LABEL description="Longest Increasing Subsequence solver using O(n log n) algorithm"
+LABEL description="Longest Increasing Sequence solver using an O(n) contiguous-run algorithm"
 LABEL version="1.0"

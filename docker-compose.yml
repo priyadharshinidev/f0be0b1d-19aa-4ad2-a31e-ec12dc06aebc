@@ -17,8 +17,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-      args:
-        - DOTNET_SDK_VERSION=8.0
     container_name: lis-tests
     volumes:
       - ./test-results:/app/test-results

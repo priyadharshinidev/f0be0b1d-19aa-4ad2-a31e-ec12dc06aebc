@@ -1,0 +1,13 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+
+WORKDIR /src
+# Copy project files
+COPY LIS.Cli/LIS.Cli.csproj LIS.Cli/
+COPY LIS.Tests/LIS.Tests.csproj LIS.Tests/
+RUN dotnet restore LIS.Tests/LIS.Tests.csproj
+
+COPY LIS.Cli/ LIS.Cli/
+COPY LIS.Tests/ LIS.Tests/
+
+WORKDIR /src
+ENTRYPOINT ["dotnet", "test", "LIS.Tests/LIS.Tests.csproj", "--configuration", "Release"]
