@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Longest Increasing Sequence Implementation Guide</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:28px;line-height:1.45;color:#111}
+    h1,h2{color:#0b57a4}
+    pre{background:#f6f8fa;padding:12px;border-radius:6px;overflow:auto}
+    code{background:#eef;font-family:monospace;padding:2px 4px;border-radius:4px}
+    .section{margin-bottom:18px}
+    table{border-collapse:collapse}
+    td,th{padding:6px 8px;border:1px solid #ddd}
+  </style>
+</head>
+<body>
+  <h1>Longest Increasing Sequence — Implementation Guide</h1>
+  <div class="section">
+    <strong>Goal</strong>: Implement a public C# method that takes a single string of integers (space-separated) and returns the longest contiguous strictly increasing sequence as a single space-separated string. If multiple sequences of equal length exist, return the earliest one.
+  </div>
+
+  <h2>Will the proposed approach work?</h2>
+  <div class="section">
+    <p>The required behavior is a longest contiguous increasing run, so a single linear scan is sufficient. A general subsequence algorithm would produce different results because it may skip values.</p>
+  </div>
+
+  <h2>Flow (mapping to your diagram)</h2>
+  <pre>
+    INPUT
+      ↓
+    Parse integers
+      ↓
+    For each adjacent pair (index i - 1, i)
+      ↓
+    If nums[i] > nums[i - 1], extend current run
+      ↓
+    Otherwise, start a new run
+      ↓
+    Update the best run only when the current run is longer
+      ↓
+    Join the selected values
+      ↓
+    RESULT
+  </pre>
+
+  <h2>Data structures to maintain</h2>
+  <ul>
+    <li><strong>nums[]</strong> — parsed integers</li>
+    <li><strong>bestStart</strong> and <strong>bestLength</strong> — the selected run</li>
+    <li><strong>currentStart</strong> — the start of the run currently being scanned</li>
+  </ul>
+
+  <h2>Tie-breaking (earliest sequence)</h2>
+  <p>Update the best run only when the current run is strictly longer. Equal-length runs do not replace it, so the first longest run is preserved.</p>
+
+  <p>Because the result must be contiguous, no predecessor array or patience-sorting tails are needed.</p>
+
+  <h2>Pseudocode</h2>
+  <pre>
+parse input -> nums[] (ignore empty tokens)
+if nums is empty, return empty string
+bestStart = 0; bestLength = 1; currentStart = 0
+for i in 1..nums.length - 1:
+  if nums[i] <= nums[i - 1]: currentStart = i
+  currentLength = i - currentStart + 1
+  if currentLength > bestLength:
+    bestStart = currentStart; bestLength = currentLength
+join nums[bestStart..bestStart + bestLength - 1] with single spaces
+  </pre>
+
+  <h2>Complexity</h2>
+  <ul>
+    <li>Time: O(n)</li>
+    <li>Space: O(n) for the parsed values</li>
+  </ul>
+
+  <h2>Edge cases</h2>
+  <ul>
+    <li>Empty input -> return empty string</li>
+    <li>Single number -> return that number</li>
+    <li>Duplicate or decreasing adjacent values end the current run</li>
+    <li>Leading/trailing/multiple spaces: trim and split on whitespace</li>
+  </ul>
+
+  <h2>Recommendation</h2>
+  <p>Use the linear adjacent-value scan. It directly matches the contiguous sequence requirement and preserves the earliest longest run.</p>
+
+  <h2>How to convert to PDF</h2>
+  <p>Open this HTML in any browser and print to PDF (File → Print → Save as PDF). Or use a CLI tool like <code>wkhtmltopdf</code> if you prefer automation.</p>
+
+  <p>--- End of guide ---</p>
+</body>
+</html>

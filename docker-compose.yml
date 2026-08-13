@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  lis-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lis-solver:latest
+    container_name: lis-solver
+    stdin_open: true
+    tty: true
+    entrypoint: ["dotnet", "LIS.Cli.dll"]
+    command: [""]
+
+  # Service for running tests
+  lis-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        - DOTNET_SDK_VERSION=8.0
+    container_name: lis-tests
+    volumes:
+      - ./test-results:/app/test-results
+    command: >
+      bash -c "
+        dotnet test LIS.Tests/LIS.Tests.csproj 
+          --configuration Release 
+          --verbosity normal 
+          --logger 'trx;LogFileName=/app/test-results/test-results.trx' &&
+        echo 'Tests completed!'
+      "

@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "LIS.Cli\\LIS.Cli.csproj",
+        "-c",
+        "Debug"
+      ],
+      "options": {
+        "env": {
+          "PATH": "${env:USERPROFILE}\\.dotnet;${env:PATH}",
+          "DOTNET_ROOT": "${env:USERPROFILE}\\.dotnet"
+        }
+      },
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
